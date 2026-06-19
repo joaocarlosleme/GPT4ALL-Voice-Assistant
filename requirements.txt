@@ -1,0 +1,8 @@
+gpt4all
+openai-whisper
+SpeechRecognition
+playsound
+PyAudio
+soundfile
+pyttsx3
+python-dotenv==1.0.0

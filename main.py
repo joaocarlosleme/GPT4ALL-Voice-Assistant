@@ -8,10 +8,10 @@ import warnings
 import time
 import os
 
-wake_word = 'jarvis'
-model = GPT4All("/Users/YOUR_USERNAME_HERE/Library/Application Support/nomic.ai/GPT4All/ggml-model-gpt4all-falcon-q4_0.bin", allow_download=False)
+wake_word = 'kate'
+model = GPT4All(model_name="ggml-model-gpt4all-falcon-q4_0.bin", model_path="models/", allow_download=False)
 r = sr.Recognizer()
-tiny_model_path = os.path.expanduser('~/.cache/whisper/tiny.pt')
+tiny_model_path = os.path.expanduser('~/.cache/whisper/tiny.pt') # C:\Users\[Your Username]]\.cache\whisper / C:/Users/joaoc/.cache/whisper/tiny.pt
 base_model_path = os.path.expanduser('~/.cache/whisper/base.pt')
 tiny_model = whisper.load_model(tiny_model_path)
 base_model = whisper.load_model(base_model_path)
@@ -22,7 +22,8 @@ warnings.filterwarnings("ignore", category=UserWarning, module='whisper.transcri
 
 if sys.platform != 'darwin':
     import pyttsx3
-    engine = pyttsx3.init() 
+    engine = pyttsx3.init()
+    engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0')
 
 def speak(text):
     if sys.platform == 'darwin':
@@ -32,6 +33,7 @@ def speak(text):
     else:
         engine.say(text)
         engine.runAndWait()
+        engine.stop()
 
 def listen_for_wake_word(audio):
     global listening_for_wake_word
